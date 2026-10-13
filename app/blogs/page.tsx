@@ -1,20 +1,55 @@
+import Link from "next/link"
 import { getBlogs } from "../services/blogs"
+import { filterBlogs } from "../actions/blogs"
+import { Suspense } from "react"
 
-const Blogs = () => {
-  const blogs = getBlogs()
+
+type Props = {
+  searchParams: Promise<{ filter?: string }>
+}
+
+async function BlogsContent({ searchParams }: Props) {
+  const { filter } = await searchParams
+  const allBlogs = getBlogs()
+
+  const blogs = filter
+    ? allBlogs.filter((blog) =>
+        blog.title.toLowerCase().includes(filter.toLowerCase())
+      )
+    : allBlogs
+
   return (
     <div>
       <h2>Blogs</h2>
+
+      <form action={filterBlogs}>
+        <input
+          type="text"
+          name="filter"
+          defaultValue={filter ?? ""}
+          key={filter ?? ""}
+        />
+        <button type="submit">
+          Search
+        </button>
+      </form>
+      <br/>
+      <Link href="/blogs">
+        <button type="button">Show all</button>
+      </Link>
+
       <ul>
-        {blogs.map(blog => (
+        {blogs.map((blog) => (
           <li key={blog.id}>
-            <strong>{blog.title}</strong>
+            <strong>
+              <Link href={`/blogs/${blog.id}`}>
+                {blog.title}
+              </Link>
+            </strong>
             <br />
-            Author: {blog.author} 
+            Author: {blog.author}
             <br />
-            URL: <a href={blog.url} >
-              {blog.url}
-              </a>
+            URL: <a href={blog.url}>{blog.url}</a>
             <br />
             Likes: {blog.likes}
           </li>
@@ -23,4 +58,11 @@ const Blogs = () => {
     </div>
   )
 }
-export default Blogs
+
+export default function Blogs(props: Props) {
+  return (
+    <Suspense fallback={<p>Loading...</p>}>
+      <BlogsContent searchParams={props.searchParams} />
+    </Suspense>
+  )
+}

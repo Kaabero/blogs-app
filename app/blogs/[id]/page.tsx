@@ -9,7 +9,7 @@ type Props = {
 
 async function BlogContent({ params }: Props) {
   const { id } = await params
-  const blog = getBlogById(Number(id))
+  const blog = await getBlogById(Number(id))
 
   if (!blog) {
     notFound()

@@ -10,13 +10,9 @@ type Props = {
 
 async function BlogsContent({ searchParams }: Props) {
   const { filter } = await searchParams
-  const allBlogs = getBlogs()
+  const blogs = await getBlogs(filter?.trim())
 
-  const blogs = filter
-    ? allBlogs.filter((blog) =>
-        blog.title.toLowerCase().includes(filter.toLowerCase())
-      )
-    : allBlogs
+
 
   return (
     <div>

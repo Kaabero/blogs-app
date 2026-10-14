@@ -1,32 +1,54 @@
+"use client"
+import { useActionState } from "react"
 import { createBlog } from "../../actions/blogs"
 
-const NewNote = () => {
+const initialState = {
+  errors: {
+    title: "",
+    author: "",
+    url: ""
+  },
+  values: {
+    title: "",
+    author: "",
+    url: "",
+  },
+}
+
+const NewBlog = () => {
+  const [state, formAction] = useActionState(createBlog, initialState)
   return (
     <div>
-      <h2>Create a new note</h2>
-      <form action={createBlog}>
+      <h2>Create a new blog</h2>
+      <form action={formAction}>
         <div>
           <label>
-            Title
-            <input type="text" name="title" required />
+            Title:{' '}
+            <input type="text" name="title"  defaultValue={state.values?.title}/>
           </label>
         </div>
+        {state.errors?.title ? <p style={{ color: "red" }}>{state.errors.title}</p> : <br />}
         <div>
           <label>
-            Author
-            <input type="text" name="author" required />
+            Author:{' '}
+            <input type="text" name="author" defaultValue={state.values?.author} />
           </label>
         </div>
+        {state.errors?.author ? <p style={{ color: "red" }}>{state.errors.author}</p> : <br />}
         <div>
           <label>
-            URL
-            <input type="text" name="url" required />
+            URL:{' '}
+            <input type="text" name="url" defaultValue={state.values?.url} />
           </label>
         </div>
+        {state.errors?.url ? <p style={{ color: "red" }}>{state.errors.url}</p> : <br />}
         <button type="submit">Create</button>
+        
+
+
       </form>
     </div>
   )
 }
 
-export default NewNote
+export default NewBlog

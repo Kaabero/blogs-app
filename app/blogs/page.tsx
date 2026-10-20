@@ -35,7 +35,7 @@ async function BlogsContent({ searchParams }: Props) {
         <button className="mb-2 btn btn-secondary" type="button">Show all</button>
       </Link>
       )}
-
+      {blogs.length > 0 ? ( 
       <ul className="space-y-4">
         {blogs.map((blog) => (
           <li key={blog.id} className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm transition hover:border-sky-200 hover:shadow-md">
@@ -68,9 +68,15 @@ async function BlogsContent({ searchParams }: Props) {
           </li>
         ))}
       </ul>
+      ) : (
+      <p className="mt-2 mb-2 text-sm text-slate-600">
+        No blogs
+      </p> 
+      )}
     </div>
   )
 }
+
 
 export default function Blogs(props: Props) {
   return (

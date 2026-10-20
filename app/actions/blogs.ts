@@ -5,17 +5,23 @@ import { revalidatePath } from "next/cache"
 import { addBlog, likeBlog } from "../services/blogs"
 import { auth } from "@/auth"
 
+export type BlogState = {
+  values?: {
+    title: string
+    author: string
+    url: string
+  }
+  errors: {
+    title?: string
+    author?: string
+    url?: string
+  }
+  success?: boolean
+}
+
+
 export const createBlog = async (
-  prevState: { errors?: {
-      title?: string
-      author?: string
-      url?: string
-    },
-   values?: {
-      title: string
-      author: string
-      url: string
-    } },
+  prevState: BlogState,
   formData: FormData
 ) => {
   const session = await auth()
@@ -26,11 +32,7 @@ export const createBlog = async (
   const author = formData.get("author") as string
   const url = formData.get("url") as string
 
-  const errors: {
-    title?: string
-    author?: string
-    url?: string
-  } = {}
+  const errors: BlogState["errors"] = {}
 
   if (!title || title.length < 5) {
     errors.title = "Title must be at least 5 characters long"
@@ -48,12 +50,13 @@ export const createBlog = async (
     return {
       errors,
       values: { title, author, url },
+      success: false
     }
   }
   await addBlog(title, author, url)
 
   revalidatePath("/blogs")
-  redirect("/blogs")
+  return { errors, success: true }
 }
 
 

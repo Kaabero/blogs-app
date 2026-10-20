@@ -1,33 +1,40 @@
 "use client"
 
-import Link from "next/link"
+
 import { useSession, signOut } from "next-auth/react"
+import NavLink from "./NavLink"
 
 export default function NavBar() {
   const { data: session } = useSession()
 
   return (
-    <nav>
-      <Link href="/">Home</Link>
-      {" | "}
-      <Link href="/blogs">Blogs</Link>
-      {" | "}
-      <Link href="/users">Users</Link>
-      {" | "}
+    <nav className="bg-gray-800 text-white px-6 py-3 flex items-center gap-4">
+      <NavLink href="/">Home</NavLink>
+      <NavLink href="/blogs">Blogs</NavLink>
+      <NavLink href="/users">Users</NavLink>
+
+      
       {session ? (
         <>
-          <Link href="/blogs/new">Create new</Link>
-          {" | "}
-          <em>{session.user?.name} logged in</em>{" "}
-          <button onClick={() => signOut()}>Logout</button>
+          <NavLink href="/blogs/new">Create new</NavLink>
+          <div className="ml-auto flex items-center gap-4">
+          <em className="text-gray-300">{session.user?.name} logged in</em>{" "}
+          <button 
+            onClick={() => signOut()}
+            className="bg-gray-600 hover:bg-gray-500 px-3 py-1 rounded text-sm"
+          >
+          Logout
+          </button>
+          </div>
         </>
       ) : (
-        <>
-          <Link href="/login">Login</Link>
+        <div className="ml-auto flex items-center gap-4">
+          <NavLink href="/login">Login</NavLink>
           {" | "}
-          <Link href="/register">Register</Link>
-        </>
+          <NavLink href="/register">Register</NavLink>
+        </div>
       )}
+      
     </nav>
   )
 }

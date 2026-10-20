@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
+  --background: #d9eafc;
   --foreground: #171717;
 }
 
@@ -23,4 +23,125 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+}
+
+
+@layer components {
+  .input {
+    display: block;
+    width: 100%;
+    padding: --spacing(2.5) --spacing(3);
+    font-size: var(--text-sm);
+    font-weight: var(--font-weight-normal);
+    color: var(--color-gray-900);
+    background-color: var(--color-white);
+    border: 1px solid var(--color-gray-300);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-xs);
+    transition:
+      border-color 150ms ease,
+      box-shadow 150ms ease;
+  }
+
+  .input::placeholder {
+    color: var(--color-gray-400);
+  }
+
+  .input:hover {
+    border-color: var(--color-gray-400);
+  }
+
+  .input:focus {
+    outline: 2px solid transparent;
+    outline-offset: 2px;
+    border-color: var(--color-blue-500);
+    box-shadow: 0 0 0 3px
+      color-mix(in srgb, var(--color-blue-500) 20%, transparent);
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.625rem 1.25rem;
+    min-height: 44px;
+    font-size: 0.875rem;
+    font-weight: 600;
+    line-height: 1.25rem;
+    border: 1px solid transparent;
+    border-radius: 0.625rem;
+    cursor: pointer;
+    text-decoration: none;
+    white-space: nowrap;
+    transition:
+      background-color 150ms ease,
+      border-color 150ms ease,
+      box-shadow 150ms ease,
+      transform 150ms ease;
+  }
+
+  .btn-primary {
+    color: #ffffff;
+    background-color: #0369a1;
+    border-color: #0369a1;
+  }
+
+  .btn-primary:hover {
+    background-color: #075985;
+    border-color: #075985;
+  }
+
+  .btn-secondary {
+    color: #334155;
+    background-color: #ffffff;
+    border-color: #cbd5e1;
+  }
+
+  .btn-secondary:hover {
+    background-color: #f1f5f9;
+    border-color: #94a3b8;
+  }
+
+  .btn:focus-visible {
+    outline: 3px solid #38bdf8;
+    outline-offset: 3px;
+  }
+
+  .btn:active {
+    transform: translateY(1px);
+  }
+
+  .link {
+    color: #0369a1;
+    font-weight: 500;
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 3px;
+    overflow-wrap: anywhere;
+    transition: color 150ms ease;
+  }
+
+  .link:hover {
+    color: #075985;
+    text-decoration-thickness: 2px;
+  }
+
+  .link:focus-visible,
+  .blog-title-link:focus-visible {
+    outline: 2px solid #0284c7;
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  .blog-title-link {
+    color: #0f172a;
+    text-decoration: none;
+    transition: color 150ms ease;
+  }
+
+  .blog-title-link:hover {
+    color: #0369a1;
+    text-decoration: underline;
+    text-underline-offset: 4px;
+  }
 }

@@ -15,30 +15,46 @@ async function BlogContent({ params }: Props) {
     notFound()
   }
 
+
   return (
-    <div>
-      <h2>{blog.title}</h2>
-      <br />
-      Author: {blog.author}
-      <br />
-      URL: <a href={blog.url}>{blog.url}</a>
-      <br />
-      Likes: {blog.likes}
+    <div className="max-w-2xl mx-auto p-6">
+      <h2 className="text-2xl font-bold mb-4">{blog.title}</h2>
+      <p className="mt-2 mb-2 text-sm text-slate-600">
+        Author:{" "}
+        <span className="font-medium text-slate-800">
+          {blog.author}
+        </span>
+      </p>
+      <p className="mt-3 break-words text-sm text-slate-600">
+        URL:{" "}
+        <a
+          className="link"
+          href={blog.url}
+        >
+          {blog.url}
+        </a>
+      </p>
+      <p className="mt-3 text-sm text-slate-500">
+        Likes:{" "}
+        <span className="font-semibold text-slate-800">
+          {blog.likes}
+        </span>
+      </p>
       <form action={addLikeToBlog}>
         <input
           type="hidden"
           name="id"
           value={blog.id}
         />
-        <button type="submit">Like</button>
+        <button className="mt-2 btn btn-primary" type="submit">Like</button>
       </form>
-    </div>
+</div>
   )
 }
 
 export default function BlogPage({ params }: Props) {
   return (
-    <Suspense fallback={<p>Loading...</p>}>
+    <Suspense fallback={<p className="text-center mt-3">Loading...</p>}>
       <BlogContent params={params} />
     </Suspense>
   )

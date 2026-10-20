@@ -50,7 +50,7 @@ async function BlogsContent({ searchParams }: Props) {
                 {blog.author}
               </span>
             </p>
-            <p className="mt-3 break-words text-sm text-slate-600">
+            <p className="mt-3 wrap-break-word text-sm text-slate-600">
               URL:{" "}
               <a
                 className="link"

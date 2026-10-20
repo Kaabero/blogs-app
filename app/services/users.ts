@@ -32,3 +32,18 @@ export const getToken = async (id: number) => {
 
   return user?.token ?? null
 }
+
+export const getUserByToken= async (token: string) => {
+  return db.query.users.findFirst({
+    where: eq(users.token, token),
+     with: {
+      blogs: {
+        columns: {
+          author: true,
+          title: true,
+          url: true,
+        },
+      },
+    },
+  })
+}

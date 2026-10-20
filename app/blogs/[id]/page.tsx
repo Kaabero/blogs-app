@@ -1,7 +1,9 @@
 import { notFound } from "next/navigation"
 import { getBlogById } from "../../services/blogs"
-import { addLikeToBlog } from "../../actions/blogs"
+import { addLikeToBlog, addBlogToReadingList } from "../../actions/blogs"
 import { Suspense } from "react"
+import { getCurrentUser } from "@/app/services/session"
+import { getReadingListStatus } from "@/app/services/readingList"
 
 type Props = {
   params: Promise<{ id: string }>
@@ -10,10 +12,15 @@ type Props = {
 async function BlogContent({ params }: Props) {
   const { id } = await params
   const blog = await getBlogById(Number(id))
+  const user = await getCurrentUser()
+  
+
 
   if (!blog) {
     notFound()
   }
+
+  const readingListStatus = await getReadingListStatus(blog.id)
 
 
   return (
@@ -48,6 +55,16 @@ async function BlogContent({ params }: Props) {
         />
         <button className="mt-2 btn btn-primary" type="submit">Like</button>
       </form>
+      {user && user.id !== blog.userId && !readingListStatus && (
+      <form action={addBlogToReadingList}>
+        <input
+          type="hidden"
+          name="id"
+          value={blog.id}
+        />
+        <button className="mt-2 btn btn-primary bg-emerald-500" type="submit">Add to reading list</button>
+      </form>
+      )}
 </div>
   )
 }

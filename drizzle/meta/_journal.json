@@ -36,6 +36,13 @@
       "when": 1792494385181,
       "tag": "0004_low_magik",
       "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1792497531836,
+      "tag": "0005_spicy_stick",
+      "breakpoints": true
     }
   ]
 }

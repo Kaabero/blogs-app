@@ -2,7 +2,7 @@
 
 import { redirect } from "next/navigation"
 import { revalidatePath } from "next/cache"
-import { addBlog, likeBlog } from "../services/blogs"
+import { addBlog, likeBlog, addToReadingList } from "../services/blogs"
 import { auth } from "@/auth"
 
 export type BlogState = {
@@ -75,4 +75,11 @@ redirect("/blogs")
 }
 
 redirect(`/blogs?filter=${filter}`)
+}
+
+export const addBlogToReadingList = async (formData: FormData) => {
+  const id = Number(formData.get("id"))
+  await addToReadingList(id)
+  revalidatePath("/me")
+  revalidatePath(`/blogs/${id}`)
 }

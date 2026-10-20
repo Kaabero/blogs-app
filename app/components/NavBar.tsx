@@ -17,6 +17,7 @@ export default function NavBar() {
       {session ? (
         <>
           <NavLink href="/blogs/new">Create new</NavLink>
+          <NavLink href="/me">Me</NavLink>
           <div className="ml-auto flex items-center gap-4">
           <em className="text-gray-300">{session.user?.name} logged in</em>{" "}
           <button 

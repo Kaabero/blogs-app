@@ -4,7 +4,8 @@ import { redirect } from "next/navigation"
 import bcrypt from "bcryptjs"
 import { db } from "@/db"
 import { users } from "@/db/schema"
-import { getUserByUsername } from "../services/users"
+import { getUserByUsername, addToken } from "../services/users"
+import { revalidatePath } from "next/cache"
 
 export const registerUser = async (
   prevState: { errors?: {
@@ -66,4 +67,13 @@ export const registerUser = async (
   await db.insert(users).values({ username, name, passwordHash })
 
   redirect("/login")
+}
+
+export const generateNewToken = async (formData: FormData) => {
+  const id = Number(formData.get("userId"))
+  const token = crypto.randomUUID()
+  await addToken(id, token)
+
+  revalidatePath("/me")
+
 }

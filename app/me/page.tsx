@@ -4,6 +4,7 @@ import { getCurrentUser } from "../services/session"
 import { Suspense } from "react"
 import { generateNewToken } from "./../actions/users"
 import { getToken, getUserWithReadingList } from "../services/users"
+import { toggleBlogUnread } from "../actions/readingList"
 
 
 async function ProfileContent() {
@@ -17,9 +18,13 @@ async function ProfileContent() {
 
   const userWithReadinglist = await getUserWithReadingList(user.id)
 
-  const readingList = userWithReadinglist?.readingList.map((item) => item.blog)
+  const unreadBlogs = userWithReadinglist?.readingList.filter((item) => item.read === false).map((item)=> item.blog)
 
-  const userHasBlogsInReadingList = readingList && readingList?.length > 0
+  const readBlogs = userWithReadinglist?.readingList.filter((item) => item.read === true).map((item)=> item.blog)
+
+  const userHasUnreadBlogs = unreadBlogs && unreadBlogs?.length > 0
+
+  const userHasReadBlogs = readBlogs && readBlogs?.length > 0
 
 
   return (
@@ -58,23 +63,77 @@ async function ProfileContent() {
         />
         <button className="mt-2 font-medium btn btn-primary" type="submit">Generate New Token</button>
       </form>
-       <h3 className="text-2xl mb-4 mt-5">Reading list</h3>
-      {userHasBlogsInReadingList ? (
+    <h3 className="text-2xl mb-4 mt-5">Reading list</h3>
+    <h4 className="text-1xl mb-4 mt-5">Unread ({unreadBlogs?.length})</h4>
+
+    {userHasUnreadBlogs ? (
       <ul className="space-y-4">
-        {readingList.map((blog) => (
-          <li key={blog.id} className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm transition hover:border-sky-200 hover:shadow-md">
+        {unreadBlogs.map((blog) => (
+        <li
+          key={blog.id}
+          className="flex items-center gap-3 rounded-xl border border-slate-200 bg-white p-5 shadow-sm transition hover:border-sky-200 hover:shadow-md"
+        >
+          <h4 className="text-lg font-semibold">
+            <Link
+              className="blog-title-link"
+              href={`/blogs/${blog.id}`}
+            >
+              {blog.title}
+            </Link>
+          </h4>
+
+          <form action={toggleBlogUnread} className="ml-auto">
+            <input type="hidden" name="id" value={blog.id} />
+            <button
+              className="btn btn-primary bg-emerald-500"
+              type="submit"
+            >
+              Mark as read
+            </button>
+          </form>
+        </li>
+        ))}
+      </ul>
+    ) : (
+
+      <p className="mt-2 mb-2 text-sm text-slate-600">
+        No unread blogs in reading list
+      </p>
+
+    )}
+    <h4 className="text-1xl mb-4 mt-5">Read ({readBlogs?.length})</h4>
+
+
+    {userHasReadBlogs ? (
+      <ul className="space-y-4">
+        {readBlogs.map((blog) => (
+          <li
+            key={blog.id}
+            className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm transition hover:border-sky-200 hover:shadow-md"
+          >
             <h4 className="text-lg font-semibold">
-            <Link className="blog-title-link" href={`/blogs/${blog.id}`}>{blog.title}</Link>
+              <Link
+                className="blog-title-link"
+                href={`/blogs/${blog.id}`}
+              >
+                {blog.title}
+              </Link>
             </h4>
           </li>
         ))}
       </ul>
-      ) : (
-        <p className="mt-2 mb-2 text-sm text-slate-600">
-          No blogs in reading list
-        </p>
+    ) : (
+      <p className="mt-2 mb-2 text-sm text-slate-600">
+        No read blogs in reading list
+      </p>
 
-      )}
+    )}
+
+    {!userHasUnreadBlogs && !userHasReadBlogs && (
+      <p className="mt-2 mb-2 text-sm text-slate-600">
+        No blogs in reading list
+      </p>
+    )}
     </div>
   )
 }

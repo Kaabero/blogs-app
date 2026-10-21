@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation"
 import { getBlogById } from "../../services/blogs"
-import { addLikeToBlog, addBlogToReadingList } from "../../actions/blogs"
+import { addLikeToBlog } from "../../actions/blogs"
+import { addBlogToReadingList } from "@/app/actions/readingList"
 import { Suspense } from "react"
 import { getCurrentUser } from "@/app/services/session"
 import { getReadingListStatus } from "@/app/services/readingList"

@@ -66,3 +66,9 @@ export const addToReadingList = async (blogId: number) => {
   await db.insert(readingList).values({userId: user.id, blogId})
 
 }
+
+export const deleteAllBlogs = async () => {
+
+  await db.delete(blogs)
+
+}

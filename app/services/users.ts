@@ -61,3 +61,15 @@ export const getUserWithReadingList = async (id: number) => {
     },
   })
 }
+
+export const deleteAllUsers = async () => {
+
+  await db.delete(users)
+
+}
+
+export const addUser = async (username: string, name: string, passwordHash: string) => {
+
+  await db.insert(users).values({username, name, passwordHash})
+
+}

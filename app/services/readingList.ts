@@ -55,3 +55,9 @@ export const toggleUnRead = async (blogId: number) => {
  
 }
 
+export const deleteAllReadingLists = async () => {
+
+  await db.delete(readingList)
+
+}
+

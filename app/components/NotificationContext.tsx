@@ -34,9 +34,9 @@ export const NotificationProvider = ({
   }
 
   return (
-    <NotificationContext value={{ message, type, showNotification }}>
+    <NotificationContext.Provider value={{ message, type, showNotification }}>
       {children}
-    </NotificationContext>
+    </NotificationContext.Provider>
   )
 }
 

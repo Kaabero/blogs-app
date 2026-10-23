@@ -9,15 +9,15 @@ export default function NavBar() {
 
   return (
     <nav className="bg-gray-800 text-white px-6 py-3 flex items-center gap-4">
-      <NavLink href="/">Home</NavLink>
-      <NavLink href="/blogs">Blogs</NavLink>
-      <NavLink href="/users">Users</NavLink>
+      <NavLink href="/">home</NavLink>
+      <NavLink href="/blogs">blogs</NavLink>
+      <NavLink href="/users">users</NavLink>
 
       
       {session ? (
         <>
-          <NavLink href="/blogs/new">Create new</NavLink>
-          <NavLink href="/me">Me</NavLink>
+          <NavLink href="/blogs/new">create new</NavLink>
+          <NavLink href="/me">me</NavLink>
           <div className="ml-auto flex items-center gap-4">
           <em className="text-gray-300">{session.user?.name} logged in</em>{" "}
           <button 
@@ -30,9 +30,9 @@ export default function NavBar() {
         </>
       ) : (
         <div className="ml-auto flex items-center gap-4">
-          <NavLink href="/login">Login</NavLink>
+          <NavLink href="/login">login</NavLink>
           {" | "}
-          <NavLink href="/register">Register</NavLink>
+          <NavLink href="/register">register</NavLink>
         </div>
       )}
       

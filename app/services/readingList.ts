@@ -38,7 +38,7 @@ export const toggleUnRead = async (blogId: number) => {
       eq(readingList.blogId, blogId)
     ))
 
-  if (!blog) {
+  if (blog.length === 0) {
     throw new Error("Blog not found from readinglist")
   }
 

@@ -35,26 +35,26 @@ const NewBlog = () => {
       <form action={formAction} className="mb-5 flex flex-col gap-1 sm:flex-col">
         <div>
           <label>
-            Title:{' '}
+            Title{' '}
             <input className="input min-w-0 flex-1" type="text" name="title"  defaultValue={state.values?.title}/>
           </label>
         </div>
         {state.errors?.title ? <p style={{ color: "red" }}>{state.errors.title}</p> : <br />}
         <div>
           <label>
-            Author:{' '}
+            Author{' '}
             <input className="input min-w-0 flex-1" type="text" name="author" defaultValue={state.values?.author} />
           </label>
         </div>
         {state.errors?.author ? <p style={{ color: "red" }}>{state.errors.author}</p> : <br />}
         <div>
           <label>
-            URL:{' '}
+            URL{' '}
             <input className="input min-w-0 flex-1" type="text" name="url" defaultValue={state.values?.url} />
           </label>
         </div>
         {state.errors?.url ? <p style={{ color: "red" }}>{state.errors.url}</p> : <br />}
-        <button className="mt-2 btn btn-primary" type="submit">Create</button>
+        <button data-testid="create-blog-button" className="mt-2 btn btn-primary" type="submit">Create</button>
         
 
 

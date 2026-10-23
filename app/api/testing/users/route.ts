@@ -25,5 +25,8 @@ export const POST = async (req: NextRequest) => {
 		return NextResponse.json({ error: "Creating user failed" }, { status: 400 })
 	}
 
-	return new NextResponse(null, { status: 201 })
+	return NextResponse.json(
+  { username, name },
+  { status: 201 },
+)
 }

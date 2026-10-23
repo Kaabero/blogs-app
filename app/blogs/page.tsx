@@ -15,18 +15,19 @@ async function BlogsContent({ searchParams }: Props) {
 
 
   return (
-    <div className="max-w-2xl mx-auto p-6">
+    <div data-testid="blogs-list" className="max-w-2xl mx-auto p-6">
       <h2 className="text-2xl font-bold mb-4">Blogs</h2>
 
       <form action={filterBlogs} className="mb-5 flex flex-col gap-1 sm:flex-row">
         <input
         className="input min-w-0 flex-1"
+        data-testid="filter-input"
           type="text"
           name="filter"
           defaultValue={filter ?? ""}
           key={filter ?? ""}
         />
-        <button className="btn btn-primary" type="submit">
+        <button data-testid="search-button" className="btn btn-primary" type="submit">
           Search
         </button>
       </form>
@@ -36,7 +37,7 @@ async function BlogsContent({ searchParams }: Props) {
       </Link>
       )}
       {blogs.length > 0 ? ( 
-      <ul className="space-y-4">
+      <ul  className="space-y-4">
         {blogs.map((blog) => (
           <li key={blog.id} className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm transition hover:border-sky-200 hover:shadow-md">
             <h4 className="text-lg font-semibold">
@@ -60,9 +61,8 @@ async function BlogsContent({ searchParams }: Props) {
               </a>
               </p>
             <p className="mt-3 text-sm text-slate-500">
-              Likes:{" "}
               <span className="font-semibold text-slate-800">
-                {blog.likes}
+                {blog.likes} likes
               </span>
             </p>
           </li>

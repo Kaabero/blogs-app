@@ -28,7 +28,7 @@ export default function RegisterPage() {
             <input className="input min-w-0 flex-1" type="text" name="username" defaultValue={state.values?.username} />
           </label>
         </div>
-        {state.errors?.username ? <p style={{ color: "red" }}>{state.errors.username}</p> : <br />}
+        {state.errors?.username ? <p data-testid="username-error" style={{ color: "red" }}>{state.errors.username}</p> : <br />}
         <div>
           <label>
             Name
@@ -45,12 +45,12 @@ export default function RegisterPage() {
         {state.errors?.password ? <p style={{ color: "red" }}>{state.errors.password}</p> : <br />}
         <div>
           <label>
-            Repeat password
+            Confirm Password
             <input className="input min-w-0 flex-1" type="password" name="passwordConfirm"/>
           </label>
         </div>
-        {state.errors?.passwordConfirm ? <p style={{ color: "red" }}>{state.errors.passwordConfirm}</p> : <br />}
-        <button className="mt-2 btn btn-primary" type="submit">Register</button>
+        {state.errors?.passwordConfirm ? <p data-testid="passwordConfirm-error" style={{ color: "red" }}>{state.errors.passwordConfirm}</p> : <br />}
+        <button className="mt-2 btn btn-primary" type="submit" data-testid="register-button">Register</button>
       </form>
     </div>
   )

@@ -5,7 +5,7 @@ import bcrypt from "bcryptjs"
 import { db } from "@/db"
 import { users } from "@/db/schema"
 import { getUserByUsername, addToken } from "../services/users"
-import { revalidatePath, refresh } from "next/cache"
+import { revalidatePath } from "next/cache"
 
 export const registerUser = async (
   prevState: { errors?: {
@@ -76,6 +76,5 @@ export const generateNewToken = async (formData: FormData) => {
 
 
   revalidatePath("/me")
-  refresh()
 
 }

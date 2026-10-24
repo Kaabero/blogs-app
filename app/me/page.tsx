@@ -5,15 +5,18 @@ import { Suspense } from "react"
 import { generateNewToken } from "./../actions/users"
 import { getToken, getUserWithReadingList } from "../services/users"
 import { toggleBlogUnread } from "../actions/readingList"
+import { connection } from "next/server"
 
 async function ProfileContent() {
+  await connection()
+
   const user = await getCurrentUser()
 
   if (!user) {
     redirect("/login")
   }
 
-  const token = await getToken(user.id)
+   const token = await getToken(user.id)
 
   const userWithReadinglist = await getUserWithReadingList(user.id)
   const unreadBlogs =
@@ -132,9 +135,12 @@ async function ProfileContent() {
   )
 }
 
+
 export default function MyProfilePage() {
   return (
-    <Suspense fallback={<p className="text-center mt-3">Loading...</p>}>
+    <Suspense
+      fallback={<p className="text-center mt-3">Loading...</p>}
+    >
       <ProfileContent />
     </Suspense>
   )

@@ -49,9 +49,8 @@ async function ProfileContent() {
         <h3 className="text-xl mb-4 mt-2">API Token</h3>
         {token ? (
       <>
-        <p className="mt-2 mb-2 text-sm text-slate-600">Current token:</p>
+        <p data-testid="token-display" className="mt-2 mb-2 text-sm text-slate-600">Current token:</p>
         <code data-testid="api-token" className="mt-2 mb-2 block text-sm bg-slate-100 p-3 rounded border border-slate-300 text-slate-800">{token}</code>
-        <p data-testid="token-display">{token}</p>
       </>
       ) : (
         <p data-testid="no-token-message" className="mt-2 mb-2 text-sm text-slate-600">

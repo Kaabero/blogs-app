@@ -367,10 +367,11 @@ test.describe("Blog Application", () => {
       await page.goto("/blogs")
       await page.getByRole("link", { name: "Test Blog" }).click()
       await page.waitForSelector('[data-testid="add-to-reading-list-button"]')
-      await page.getByTestId("add-to-reading-list-button").click()
-
       // Wait for server action to complete
-      await page.waitForTimeout(500)
+      await Promise.all([
+        page.waitForResponse((response) => response.status() === 200),
+        page.getByTestId("add-to-reading-list-button").click(),
+      ])
 
       // Go to me page and mark as read
       await page.goto("/me")
@@ -381,9 +382,6 @@ test.describe("Blog Application", () => {
       // Click the first mark as read button
       const markReadButton = page.locator('[data-testid^="mark-read-"]').first()
       await markReadButton.click()
-
-      // Wait for the page to update
-      await page.waitForTimeout(1000)
 
       // Should now show empty unread section
       await expect(page.getByTestId("no-unread-blogs")).toBeVisible()
@@ -460,8 +458,8 @@ test.describe("Blog Application", () => {
       // Generate new token without reloading
       await page.getByTestId("generate-token-button").click()
 
-      // Wait for token to potentially change
-      await page.waitForTimeout(2500)
+      // Wait until the token has changed
+      await expect(page.getByTestId("api-token")).not.toHaveText(firstToken!)
       const secondToken = await page.getByTestId("api-token").textContent()
 
       // Tokens should be different
